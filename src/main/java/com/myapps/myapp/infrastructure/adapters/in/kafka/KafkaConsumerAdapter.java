@@ -22,7 +22,7 @@ public class KafkaConsumerAdapter implements EventConsumerPort {
     private final CachePort cachePort;
 
     @Override
-    @KafkaListener(topics = "PRODUCT_DETAILS_CHANGED", groupId = "product-service", containerFactory = "productDetailsContainerFactory")
+    @KafkaListener(topics = "PRODUCT_DETAILS_CHANGED", groupId = "product-service", containerFactory = "productDetailsChangedKafkaListenerContainerFactory")
     public void consumeProductDetailsChangedEvent(ProductDetailsChangedEvent event) {
 
         log.debug("Received event for similar product details: {}", event);
