@@ -13,7 +13,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import com.myapps.myapp.application.service.SimilarProductsUseCaseService;
 import com.myapps.myapp.domain.model.ProductDetails;
 import com.myapps.myapp.domain.port.out.CachePort;
 import com.myapps.myapp.domain.port.out.EventPublisherPort;
