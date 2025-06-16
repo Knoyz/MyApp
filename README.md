@@ -30,7 +30,6 @@
   - **WebClient** para comunicación con servicios REST externos (microservicios).
   - Redis para cacheo reactivo.
   - Kafka Producer/Consumer para eventos de cambios en productos.
-  - **gRPC:** El proyecto está preparado para soportar comunicación gRPC en el futuro (clases `.proto` y dependencias incluidas), aunque actualmente no se utiliza ya que el microservicio externo solo expone HTTP. Esta preparación permite una migración sencilla a gRPC cuando el ecosistema lo permita.
 - **Dominio:**  
   - Modelos de negocio (`ProductDetails`, `ProductDetailsChangedEvent`)
   - Puertos (`SimilarProductsUseCase`, `EventConsumerPort`, etc.)
@@ -128,7 +127,7 @@
 ### 1. Clonar el repositorio
 
 ```bash
-git clone <REPO_URL>
+git clone https://github.com/Knoyz/MyApp.git
 cd MyApp
 ```
 
@@ -167,5 +166,43 @@ docker run --rm -p 5000:5000 --network="host" myapp
 
 API REST: http://localhost:5000
 Swagger UI: http://localhost:5000/swagger-ui.html
+
+---
+
+# Aclaraciones.
+> Los tests de rendimiento y los servicios externos a los que este servicio se conectan, no son de mi propiedad.
+> Añado los links y resultados para que puedan llegar a ellos más fácilmente. https://github.com/dalogax/backendDevTest.git
+
+  scenarios: (100.00%) 5 scenarios, 200 max VUs, 1m30s max duration (incl. graceful stop):
+           * normal: 200 looping VUs for 10s (exec: normal)
+           * notFound: 200 looping VUs for 10s (exec: notFound, startTime: 10s)
+           * error: 200 looping VUs for 10s (exec: error, startTime: 20s)
+           * slow: 200 looping VUs for 10s (exec: slow, startTime: 30s, gracefulStop: 10s)
+           * verySlow: 200 looping VUs for 10s (exec: verySlow, startTime: 50s, gracefulStop: 30s)
+
+
+running (1m30.1s), 000/200 VUs, 4854 complete and 1000 interrupted iterations
+normal   ✓ [======================================] 200 VUs  10s
+notFound ✓ [======================================] 200 VUs  10s
+error    ✓ [======================================] 200 VUs  10s
+slow     ✓ [======================================] 200 VUs  10s
+verySlow ✓ [======================================] 200 VUs  10s
+
+    data_received..............: 10 MB  111 kB/s
+    data_sent..................: 632 kB 7.0 kB/s
+    http_req_blocked...........: avg=123.26µs min=1.97µs   med=8.79µs   max=17.76ms p(90)=24.3µs  p(95)=146.79µs
+    http_req_connecting........: avg=108.99µs min=0s       med=0s       max=17.7ms  p(90)=0s      p(95)=0s      
+    http_req_duration..........: avg=609.88ms min=5.53ms   med=69.32ms  max=9.77s   p(90)=3.08s   p(95)=3.54s   
+    http_req_receiving.........: avg=1.09ms   min=19.65µs  med=572.25µs max=41.17ms p(90)=2.58ms  p(95)=3.76ms  
+    http_req_sending...........: avg=46.45µs  min=7.47µs   med=34.1µs   max=3.22ms  p(90)=68.05µs p(95)=100.15µs
+    http_req_tls_handshaking...: avg=0s       min=0s       med=0s       max=0s      p(90)=0s      p(95)=0s      
+    http_req_waiting...........: avg=608.74ms min=5.24ms   med=68.26ms  max=9.77s   p(90)=3.08s   p(95)=3.54s   
+    http_reqs..................: 5270   58.51767/s
+    iteration_duration.........: avg=1.09s    min=506.39ms med=568.91ms max=9.96s   p(90)=3.53s   p(95)=4.01s   
+    iterations.................: 4854   53.898439/s
+    vus........................: 200    min=200 max=200
+    vus_max....................: 200    min=200 max=200
+
+
 
 
